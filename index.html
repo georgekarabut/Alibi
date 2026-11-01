@@ -70,10 +70,10 @@ function build(locksImg,mapImg){
   const md=mc.getImageData(0,0,MW,MH).data;
   labels=new Uint16Array(MW*MH);
   for(let i=0;i<labels.length;i++)if(md[i*4+3]>128)labels[i]=md[i*4]+md[i*4+1]*256;
-  const kx=MW/IW,ky=MH/IH,lab=(x,y)=>labels[Math.min(MH-1,y*ky|0)*MW+Math.min(MW-1,x*kx|0)];
+  const kx=MW/IW,ky=MH/IH,mi=(x,y)=>Math.min(MH-1,y*ky|0)*MW+Math.min(MW-1,x*kx|0),lab=(x,y)=>labels[mi(x,y)];
   const boxes=new Map();
   for(let y=0;y<IH;y++)for(let x=0;x<IW;x++){
-    const id=lab(x,y);if(!id||px[(y*IW+x)*4+3]<8)continue;
+    const id=lab(x,y);if(!id)continue;
     let b=boxes.get(id);if(!b)boxes.set(id,b={x0:x,y0:y,x1:x,y1:y,n:0});
     if(x<b.x0)b.x0=x;if(x>b.x1)b.x1=x;if(y>b.y1)b.y1=y;b.n++;
   }
@@ -84,7 +84,7 @@ function build(locksImg,mapImg){
       const gx=b.x0+x,gy=b.y0+y;if(lab(gx,gy)!==id)continue;
       const s=(gy*IW+gx)*4,t=(y*w+x)*4;
       ed.data[t+3]=255;
-      d.data[t]=px[s];d.data[t+1]=px[s+1];d.data[t+2]=px[s+2];d.data[t+3]=px[s+3];
+      d.data[t]=px[s];d.data[t+1]=px[s+1];d.data[t+2]=px[s+2];d.data[t+3]=Math.min(px[s+3],md[mi(gx,gy)*4+2]);
     }
     k.putImageData(d,0,0);ek.putImageData(ed,0,0);
     const p={id,x:b.x0,y:b.y0,w,h,c,e,area:b.n,cut:false};
