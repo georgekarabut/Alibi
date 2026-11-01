@@ -461,212 +461,450 @@
   </footer>
   <a class="btn mobile" hidden="" href="https://n1314282.yclients.ru/company/1196928/personal/select-master?utm_source=site&amp;utm_medium=landing" rel="noopener noreferrer" target="_blank">Записаться в Алиби</a>
   <script>
-(()=>{const t=document.getElementById('reviewsTrack'),r=t.closest('.reviews-carousel'),slides=[...t.children],status=r.querySelector('.carousel-status'),motion=matchMedia('(prefers-reduced-motion: reduce)');let index=0;const update=()=>{index=Math.max(0,Math.min(slides.length-1,Math.round(t.scrollLeft/t.clientWidth)));status.textContent=(index+1)+' / '+slides.length;};const go=i=>{index=(i+slides.length)%slides.length;t.scrollTo({left:index*t.clientWidth,behavior:motion.matches?'instant':'smooth'});};r.querySelector('.carousel-controls').hidden=false;r.querySelectorAll('[data-direction]').forEach(b=>b.addEventListener('click',()=>go(index+Number(b.dataset.direction))));t.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();go(index+(e.key==='ArrowRight'?1:-1));}});t.addEventListener('scroll',update,{passive:true});new ResizeObserver(()=>{t.scrollTo({left:index*t.clientWidth,behavior:'instant'});}).observe(t);})();
+  (() => {
+    const t = document.getElementById('reviewsTrack'),
+      r = t.closest('.reviews-carousel'),
+      slides = [...t.children],
+      status = r.querySelector('.carousel-status'),
+      motion = matchMedia('(prefers-reduced-motion: reduce)');
+    let index = 0;
+    const update = () => {
+      index = Math.max(0, Math.min(slides.length - 1, Math.round(t.scrollLeft / t.clientWidth)));
+      status.textContent = (index + 1) + ' / ' + slides.length;
+    };
+    const go = i => {
+      index = (i + slides.length) % slides.length;
+      t.scrollTo({
+        left: index * t.clientWidth,
+        behavior: motion.matches ? 'instant' : 'smooth'
+      });
+    };
+    r.querySelector('.carousel-controls').hidden = false;
+    r.querySelectorAll('[data-direction]').forEach(b => b.addEventListener('click', () => go(index + Number(b.dataset.direction))));
+    t.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        e.preventDefault();
+        go(index + (e.key === 'ArrowRight' ? 1 : -1));
+      }
+    });
+    t.addEventListener('scroll', update, {
+      passive: true
+    });
+    new ResizeObserver(() => {
+      t.scrollTo({
+        left: index * t.clientWidth,
+        behavior: 'instant'
+      });
+    }).observe(t);
+  })();
   </script>
   <script id="responsive-booking">
-(()=>{
-'use strict';
-const root=document.documentElement;
-const header=document.querySelector('body > header');
-const sticky=document.querySelector('a.btn.mobile');
-const targets=[...document.querySelectorAll('[data-booking-cta]')];
-if(!sticky||!header)return;
-const mobile=matchMedia('(max-width:760px)');
-let frame=0;
-const visible=el=>{
-  const style=getComputedStyle(el);
-  if(style.display==='none'||style.visibility==='hidden'||Number(style.opacity)===0)return false;
-  const r=el.getBoundingClientRect();
-  const v=window.visualViewport;
-  const top=v?v.offsetTop:0,left=v?v.offsetLeft:0;
-  const height=v?v.height:document.documentElement.clientHeight;
-  const width=v?v.width:document.documentElement.clientWidth;
-  return r.width>0&&r.height>0&&r.bottom>top&&r.top<top+height&&r.right>left&&r.left<left+width;
-};
-const update=()=>{
-  frame=0;
-  const next=Math.ceil(header.getBoundingClientRect().height)+'px';
-  if(root.style.getPropertyValue('--site-header-height')!==next)root.style.setProperty('--site-header-height',next);
-  sticky.hidden=!(mobile.matches&&window.scrollY>8&&!targets.some(visible));
-};
-const schedule=()=>{if(!frame)frame=requestAnimationFrame(update);};
-window.addEventListener('scroll',schedule,{passive:true});
-window.addEventListener('resize',schedule,{passive:true});
-window.addEventListener('pageshow',schedule);
-window.addEventListener('load',schedule,{once:true});
-mobile.addEventListener('change',schedule);
-if(window.visualViewport){
-  visualViewport.addEventListener('resize',schedule,{passive:true});
-  visualViewport.addEventListener('scroll',schedule,{passive:true});
-}
-if('IntersectionObserver' in window){
-  const observer=new IntersectionObserver(schedule,{threshold:0});
-  targets.forEach(el=>observer.observe(el));
-}
-if('ResizeObserver' in window){
-  const sizes=new ResizeObserver(schedule);
-  sizes.observe(header);targets.forEach(el=>sizes.observe(el));
-}
-if(document.fonts)document.fonts.ready.then(schedule);
-update();
-})();
+  (() => {
+    'use strict';
+    const root = document.documentElement;
+    const header = document.querySelector('body > header');
+    const sticky = document.querySelector('a.btn.mobile');
+    const targets = [...document.querySelectorAll('[data-booking-cta]')];
+    if (!sticky || !header) return;
+    const mobile = matchMedia('(max-width:760px)');
+    let frame = 0;
+    const visible = el => {
+      const style = getComputedStyle(el);
+      if (style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) return false;
+      const r = el.getBoundingClientRect();
+      const v = window.visualViewport;
+      const top = v ? v.offsetTop : 0,
+        left = v ? v.offsetLeft : 0;
+      const height = v ? v.height : document.documentElement.clientHeight;
+      const width = v ? v.width : document.documentElement.clientWidth;
+      return r.width > 0 && r.height > 0 && r.bottom > top && r.top < top + height && r.right > left && r.left < left + width;
+    };
+    const update = () => {
+      frame = 0;
+      const next = Math.ceil(header.getBoundingClientRect().height) + 'px';
+      if (root.style.getPropertyValue('--site-header-height') !== next) root.style.setProperty('--site-header-height', next);
+      sticky.hidden = !(mobile.matches && window.scrollY > 8 && !targets.some(visible));
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    window.addEventListener('scroll', schedule, {
+      passive: true
+    });
+    window.addEventListener('resize', schedule, {
+      passive: true
+    });
+    window.addEventListener('pageshow', schedule);
+    window.addEventListener('load', schedule, {
+      once: true
+    });
+    mobile.addEventListener('change', schedule);
+    if (window.visualViewport) {
+      visualViewport.addEventListener('resize', schedule, {
+        passive: true
+      });
+      visualViewport.addEventListener('scroll', schedule, {
+        passive: true
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(schedule, {
+        threshold: 0
+      });
+      targets.forEach(el => observer.observe(el));
+    }
+    if ('ResizeObserver' in window) {
+      const sizes = new ResizeObserver(schedule);
+      sizes.observe(header);
+      targets.forEach(el => sizes.observe(el));
+    }
+    if (document.fonts) document.fonts.ready.then(schedule);
+    update();
+  })();
   </script>
   <script>
-(()=>{
-'use strict';
-const box=document.querySelector('.hero-game');
-if(!box)return;
-const SRC={after:'assets/images/game-after.webp',locks:'assets/images/game-locks.webp',map:'assets/images/game-locks-map.png'};
-const cv=box.querySelector('canvas'),ctx=cv.getContext('2d');
-const bar=box.querySelector('.hero-game-progress span');
-const done=box.querySelector('.hero-game-done');
-const again=box.querySelector('.hero-game-again');
-const reduce=matchMedia('(prefers-reduced-motion: reduce)');
-const load=src=>new Promise((ok,fail)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=fail;i.src=src;});
-const canvas=(w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c;};
-let after,locksImg,layer,lctx,IW,IH,MW,MH,labels,R,bg='#151e38',total=1,cutArea=0,layerA=1,fadeTo=1;
-let scale=1,ox=0,oy=0,dpr=1,running=false,finishing=false;
-const pieces=[],byId=new Map(),falling=[],pointers=new Map();
-
-// Режем слой «до» на локоны по карте: id = R + G*256
-function build(locksImg,mapImg){
-  const lc=canvas(IW,IH).getContext('2d');lc.drawImage(locksImg,0,0,IW,IH);
-  const px=lc.getImageData(0,0,IW,IH).data;
-  MW=mapImg.naturalWidth;MH=mapImg.naturalHeight;
-  const mc=canvas(MW,MH).getContext('2d');mc.drawImage(mapImg,0,0);
-  const md=mc.getImageData(0,0,MW,MH).data;
-  labels=new Uint16Array(MW*MH);
-  for(let i=0;i<labels.length;i++)if(md[i*4+3]>128)labels[i]=md[i*4]+md[i*4+1]*256;
-  const kx=MW/IW,ky=MH/IH,mi=(x,y)=>Math.min(MH-1,y*ky|0)*MW+Math.min(MW-1,x*kx|0),lab=(x,y)=>labels[mi(x,y)];
-  const boxes=new Map();
-  for(let y=0;y<IH;y++)for(let x=0;x<IW;x++){
-    const id=lab(x,y);if(!id)continue;
-    let b=boxes.get(id);if(!b)boxes.set(id,b={x0:x,y0:y,x1:x,y1:y,n:0});
-    if(x<b.x0)b.x0=x;if(x>b.x1)b.x1=x;if(y>b.y1)b.y1=y;b.n++;
-  }
-  for(const[id,b]of boxes){
-    const w=b.x1-b.x0+1,h=b.y1-b.y0+1,c=canvas(w,h),k=c.getContext('2d'),d=k.createImageData(w,h);
-    const e=canvas(w,h),ek=e.getContext('2d'),ed=ek.createImageData(w,h);
-    for(let y=0;y<h;y++)for(let x=0;x<w;x++){
-      const gx=b.x0+x,gy=b.y0+y;if(lab(gx,gy)!==id)continue;
-      const s=(gy*IW+gx)*4,t=(y*w+x)*4;
-      ed.data[t+3]=255;
-      d.data[t]=px[s];d.data[t+1]=px[s+1];d.data[t+2]=px[s+2];d.data[t+3]=Math.min(px[s+3],md[mi(gx,gy)*4+2]);
+  (() => {
+    'use strict';
+    const box = document.querySelector('.hero-game');
+    if (!box) return;
+    // Картинки: итоговый вид, слой «до» (волосы + борода) и карта локонов (R+G = id, B = маска волос)
+    const SRC = {
+      after: 'assets/images/game-after.webp',
+      locks: 'assets/images/game-locks.webp',
+      map: 'assets/images/game-locks-map.png'
+    };
+    const cv = box.querySelector('canvas'),
+      ctx = cv.getContext('2d');
+    const bar = box.querySelector('.hero-game-progress span');
+    const done = box.querySelector('.hero-game-done');
+    const again = box.querySelector('.hero-game-again');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    const load = src => new Promise((ok, fail) => {
+      const i = new Image();
+      i.onload = () => ok(i);
+      i.onerror = fail;
+      i.src = src;
+    });
+    const canvas = (w, h) => {
+      const c = document.createElement('canvas');
+      c.width = w;
+      c.height = h;
+      return c;
+    };
+    let after, locksImg, layer, lctx, IW, IH, MW, MH, labels, R, bg = '#151e38',
+      total = 1,
+      cutArea = 0,
+      layerA = 1,
+      fadeTo = 1;
+    let scale = 1,
+      ox = 0,
+      oy = 0,
+      dpr = 1,
+      running = false,
+      finishing = false;
+    const pieces = [],
+      byId = new Map(),
+      falling = [],
+      pointers = new Map();
+    // Режем слой «до» на локоны по карте: для каждого id — картинка локона и жёсткая маска для вырезания
+    function build(locksImg, mapImg) {
+      const lc = canvas(IW, IH).getContext('2d');
+      lc.drawImage(locksImg, 0, 0, IW, IH);
+      const px = lc.getImageData(0, 0, IW, IH).data;
+      MW = mapImg.naturalWidth;
+      MH = mapImg.naturalHeight;
+      const mc = canvas(MW, MH).getContext('2d');
+      mc.drawImage(mapImg, 0, 0);
+      const md = mc.getImageData(0, 0, MW, MH).data;
+      labels = new Uint16Array(MW * MH);
+      for (let i = 0; i < labels.length; i++)
+        if (md[i * 4 + 3] > 128) labels[i] = md[i * 4] + md[i * 4 + 1] * 256;
+      const kx = MW / IW,
+        ky = MH / IH,
+        mi = (x, y) => Math.min(MH - 1, y * ky | 0) * MW + Math.min(MW - 1, x * kx | 0),
+        lab = (x, y) => labels[mi(x, y)];
+      const boxes = new Map();
+      for (let y = 0; y < IH; y++)
+        for (let x = 0; x < IW; x++) {
+          const id = lab(x, y);
+          if (!id) continue;
+          let b = boxes.get(id);
+          if (!b) boxes.set(id, b = {
+            x0: x,
+            y0: y,
+            x1: x,
+            y1: y,
+            n: 0
+          });
+          if (x < b.x0) b.x0 = x;
+          if (x > b.x1) b.x1 = x;
+          if (y > b.y1) b.y1 = y;
+          b.n++;
+        }
+      for (const [id, b] of boxes) {
+        const w = b.x1 - b.x0 + 1,
+          h = b.y1 - b.y0 + 1,
+          c = canvas(w, h),
+          k = c.getContext('2d'),
+          d = k.createImageData(w, h);
+        const e = canvas(w, h),
+          ek = e.getContext('2d'),
+          ed = ek.createImageData(w, h);
+        for (let y = 0; y < h; y++)
+          for (let x = 0; x < w; x++) {
+            const gx = b.x0 + x,
+              gy = b.y0 + y;
+            if (lab(gx, gy) !== id) continue;
+            const s = (gy * IW + gx) * 4,
+              t = (y * w + x) * 4;
+            ed.data[t + 3] = 255;
+            d.data[t] = px[s];
+            d.data[t + 1] = px[s + 1];
+            d.data[t + 2] = px[s + 2];
+            d.data[t + 3] = Math.min(px[s + 3], md[mi(gx, gy) * 4 + 2]);
+          }
+        k.putImageData(d, 0, 0);
+        ek.putImageData(ed, 0, 0);
+        const p = {
+          id,
+          x: b.x0,
+          y: b.y0,
+          w,
+          h,
+          c,
+          e,
+          area: b.n,
+          cut: false
+        };
+        pieces.push(p);
+        byId.set(id, p);
+        total += b.n;
+      }
     }
-    k.putImageData(d,0,0);ek.putImageData(ed,0,0);
-    const p={id,x:b.x0,y:b.y0,w,h,c,e,area:b.n,cut:false};
-    pieces.push(p);byId.set(id,p);total+=b.n;
-  }
-}
-const labelAt=(x,y)=>x<0||y<0||x>=IW||y>=IH?0:labels[(y*MH/IH|0)*MW+(x*MW/IW|0)];
+    const labelAt = (x, y) => x < 0 || y < 0 || x >= IW || y >= IH ? 0 : labels[(y * MH / IH | 0) * MW + (x * MW / IW | 0)];
 
-function drop(p){
-  if(p.cut)return;
-  p.cut=true;cutArea+=p.area;
-  lctx.globalCompositeOperation='destination-out';lctx.drawImage(p.e,p.x,p.y);lctx.globalCompositeOperation='source-over';
-  if(!reduce.matches){
-    const cx=p.x+p.w/2,cy=p.y+p.h/2;
-    falling.push({p,x:cx,y:cy,vx:(Math.random()-.5)*2.2+(cx-IW/2)*.006,vy:-1-Math.random()*2.5,rot:0,vr:(Math.random()-.5)*.09,a:1});
-  }
-}
-function snip(ax,ay,bx,by){
-  const dist=Math.hypot(bx-ax,by-ay),steps=Math.max(1,Math.ceil(dist/(R*.5)));
-  let hit=false;
-  for(let s=0;s<=steps;s++){
-    const x=ax+(bx-ax)*s/steps,y=ay+(by-ay)*s/steps;
-    for(const[dx,dy]of[[0,0],[R,0],[-R,0],[0,R],[0,-R]]){
-      const p=byId.get(labelAt(x+dx|0,y+dy|0));
-      if(p&&!p.cut){drop(p);hit=true;}
+    // Срезанный локон: вырезаем из слоя и отправляем падать отдельной картинкой
+    function drop(p) {
+      if (p.cut) return;
+      p.cut = true;
+      cutArea += p.area;
+      lctx.globalCompositeOperation = 'destination-out';
+      lctx.drawImage(p.e, p.x, p.y);
+      lctx.globalCompositeOperation = 'source-over';
+      if (!reduce.matches) {
+        const cx = p.x + p.w / 2,
+          cy = p.y + p.h / 2;
+        falling.push({
+          p,
+          x: cx,
+          y: cy,
+          vx: (Math.random() - .5) * 2.2 + (cx - IW / 2) * .006,
+          vy: -1 - Math.random() * 2.5,
+          rot: 0,
+          vr: (Math.random() - .5) * .09,
+          a: 1
+        });
+      }
     }
-  }
-  if(hit){box.classList.add('is-started');progress();wake();}
-}
-function progress(){
-  const p=cutArea/total;
-  bar.style.width=(p*100).toFixed(1)+'%';
-  if(p>=.9&&!finishing){
-    finishing=true;
-    const rest=pieces.filter(q=>!q.cut).sort((a,b)=>a.y-b.y);
-    rest.forEach((q,i)=>setTimeout(()=>{drop(q);bar.style.width=(cutArea/total*100).toFixed(1)+'%';wake();},reduce.matches?0:i*40));
-    setTimeout(()=>{fadeTo=0;if(reduce.matches)layerA=0;wake();box.classList.add('is-done');done.hidden=false;},reduce.matches?0:rest.length*40+500);
-  }
-}
 
-function draw(){
-  ctx.setTransform(1,0,0,1,0,0);
-  ctx.fillStyle=bg;ctx.fillRect(0,0,cv.width,cv.height);
-  ctx.setTransform(dpr*scale,0,0,dpr*scale,dpr*ox,dpr*oy);
-  ctx.drawImage(after,0,0,IW,IH);
-  if(layerA>0){ctx.globalAlpha=layerA;ctx.drawImage(layer,0,0);ctx.globalAlpha=1;}
-  for(const f of falling){
-    ctx.save();ctx.globalAlpha=f.a;ctx.translate(f.x,f.y);ctx.rotate(f.rot);
-    ctx.drawImage(f.p.c,-f.p.w/2,-f.p.h/2);ctx.restore();
-  }
-  for(const p of pointers.values())if(p.touch){
-    ctx.strokeStyle='rgba(194,165,106,.85)';ctx.lineWidth=2/scale;
-    ctx.beginPath();ctx.arc(p.x,p.y,R*1.2,0,7);ctx.stroke();
-  }
-}
-function tick(){
-  let busy=false;
-  if(layerA!==fadeTo){layerA=fadeTo>layerA?Math.min(fadeTo,layerA+.06):Math.max(fadeTo,layerA-.06);busy=true;}
-  for(let i=falling.length-1;i>=0;i--){
-    const f=falling[i];
-    f.vy+=.45;f.x+=f.vx;f.y+=f.vy;f.rot+=f.vr;f.a-=.014;
-    if(f.a<=0||f.y-f.p.h>IH)falling.splice(i,1);
-  }
-  draw();
-  if(busy||falling.length||[...pointers.values()].some(p=>p.touch))requestAnimationFrame(tick);
-  else running=false;
-}
-const wake=()=>{if(!running&&after){running=true;requestAnimationFrame(tick);}};
+    // Проход курсором/пальцем: всё, чего коснулись по пути, отпадает целиком
+    function snip(ax, ay, bx, by) {
+      const dist = Math.hypot(bx - ax, by - ay),
+        steps = Math.max(1, Math.ceil(dist / (R * .5)));
+      let hit = false;
+      for (let s = 0; s <= steps; s++) {
+        const x = ax + (bx - ax) * s / steps,
+          y = ay + (by - ay) * s / steps;
+        for (const [dx, dy] of [
+            [0, 0],
+            [R, 0],
+            [-R, 0],
+            [0, R],
+            [0, -R]
+          ]) {
+          const p = byId.get(labelAt(x + dx | 0, y + dy | 0));
+          if (p && !p.cut) {
+            drop(p);
+            hit = true;
+          }
+        }
+      }
+      if (hit) {
+        box.classList.add('is-started');
+        progress();
+        wake();
+      }
+    }
 
-const toLocal=e=>{const r=cv.getBoundingClientRect();return[(e.clientX-r.left-ox)/scale,(e.clientY-r.top-oy)/scale];};
-cv.addEventListener('pointerdown',e=>{
-  if(!labels)return;
-  const[x,y]=toLocal(e);pointers.set(e.pointerId,{x,y,touch:e.pointerType!=='mouse'});
-  if(e.pointerType!=='mouse')try{cv.setPointerCapture(e.pointerId);}catch{}
-  if(!finishing)snip(x,y,x,y);
-  wake();
-});
-cv.addEventListener('pointermove',e=>{
-  if(!labels)return;
-  const[x,y]=toLocal(e),p=pointers.get(e.pointerId);
-  if(!p){if(e.pointerType==='mouse')pointers.set(e.pointerId,{x,y,touch:false});return;}
-  if(!finishing)snip(p.x,p.y,x,y);
-  p.x=x;p.y=y;if(p.touch)wake();
-});
-const lift=e=>{pointers.delete(e.pointerId);wake();};
-cv.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')lift(e);});
-cv.addEventListener('pointercancel',lift);
-cv.addEventListener('pointerleave',lift);
-again.addEventListener('click',()=>{
-  for(const p of pieces)p.cut=false;
-  lctx.globalCompositeOperation='copy';lctx.drawImage(locksImg,0,0,IW,IH);lctx.globalCompositeOperation='source-over';
-  fadeTo=1;layerA=reduce.matches?1:0;
-  falling.length=0;cutArea=0;finishing=false;
-  box.classList.remove('is-done','is-started');done.hidden=true;bar.style.width='0';
-  wake();
-});
+    // Прогресс по площади; с 90% оставшиеся локоны осыпаются сами и показывается финал
+    function progress() {
+      const p = cutArea / total;
+      bar.style.width = (p * 100).toFixed(1) + '%';
+      if (p >= .9 && !finishing) {
+        finishing = true;
+        const rest = pieces.filter(q => !q.cut).sort((a, b) => a.y - b.y);
+        rest.forEach((q, i) => setTimeout(() => {
+          drop(q);
+          bar.style.width = (cutArea / total * 100).toFixed(1) + '%';
+          wake();
+        }, reduce.matches ? 0 : i * 40));
+        setTimeout(() => {
+          fadeTo = 0;
+          if (reduce.matches) layerA = 0;
+          wake();
+          box.classList.add('is-done');
+          done.hidden = false;
+        }, reduce.matches ? 0 : rest.length * 40 + 500);
+      }
+    }
 
-function fit(){
-  const r=box.getBoundingClientRect();
-  dpr=Math.min(2,window.devicePixelRatio||1);
-  cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr);
-  scale=Math.min(r.width/IW,r.height/IH);
-  ox=(r.width-IW*scale)/2;oy=r.height-IH*scale;
-  draw();
-}
-Promise.all([load(SRC.after),load(SRC.locks),load(SRC.map)]).then(([a,l,m])=>{
-  after=a;IW=a.naturalWidth;IH=a.naturalHeight;R=IW*.022;
-  const c=canvas(1,1).getContext('2d');c.drawImage(a,2,2,1,1,0,0,1,1);
-  const px=c.getImageData(0,0,1,1).data;bg=`rgb(${px[0]},${px[1]},${px[2]})`;box.style.backgroundColor=bg;
-  locksImg=l;layer=canvas(IW,IH);lctx=layer.getContext('2d');lctx.drawImage(l,0,0,IW,IH);
-  build(l,m);
-  box.classList.add('is-ready');
-  new ResizeObserver(fit).observe(box);fit();
-}).catch(()=>box.classList.add('is-failed'));
-})();
+    // Отрисовка: итоговый вид, целые волосы одним слоем, падающие локоны, кольцо под пальцем
+    function draw() {
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, cv.width, cv.height);
+      ctx.setTransform(dpr * scale, 0, 0, dpr * scale, dpr * ox, dpr * oy);
+      ctx.drawImage(after, 0, 0, IW, IH);
+      if (layerA > 0) {
+        ctx.globalAlpha = layerA;
+        ctx.drawImage(layer, 0, 0);
+        ctx.globalAlpha = 1;
+      }
+      for (const f of falling) {
+        ctx.save();
+        ctx.globalAlpha = f.a;
+        ctx.translate(f.x, f.y);
+        ctx.rotate(f.rot);
+        ctx.drawImage(f.p.c, -f.p.w / 2, -f.p.h / 2);
+        ctx.restore();
+      }
+      for (const p of pointers.values())
+        if (p.touch) {
+          ctx.strokeStyle = 'rgba(194,165,106,.85)';
+          ctx.lineWidth = 2 / scale;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, R * 1.2, 0, 7);
+          ctx.stroke();
+        }
+    }
+
+    // Анимация: падение локонов, отрастание при «Ещё раз», исчезновение слоя в финале
+    function tick() {
+      let busy = false;
+      if (layerA !== fadeTo) {
+        layerA = fadeTo > layerA ? Math.min(fadeTo, layerA + .06) : Math.max(fadeTo, layerA - .06);
+        busy = true;
+      }
+      for (let i = falling.length - 1; i >= 0; i--) {
+        const f = falling[i];
+        f.vy += .45;
+        f.x += f.vx;
+        f.y += f.vy;
+        f.rot += f.vr;
+        f.a -= .014;
+        if (f.a <= 0 || f.y - f.p.h > IH) falling.splice(i, 1);
+      }
+      draw();
+      if (busy || falling.length || [...pointers.values()].some(p => p.touch)) requestAnimationFrame(tick);
+      else running = false;
+    }
+    const wake = () => {
+      if (!running && after) {
+        running = true;
+        requestAnimationFrame(tick);
+      }
+    };
+    const toLocal = e => {
+      const r = cv.getBoundingClientRect();
+      return [(e.clientX - r.left - ox) / scale, (e.clientY - r.top - oy) / scale];
+    };
+    cv.addEventListener('pointerdown', e => {
+      if (!labels) return;
+      const [x, y] = toLocal(e);
+      pointers.set(e.pointerId, {
+        x,
+        y,
+        touch: e.pointerType !== 'mouse'
+      });
+      if (e.pointerType !== 'mouse') try {
+        cv.setPointerCapture(e.pointerId);
+      } catch {}
+      if (!finishing) snip(x, y, x, y);
+      wake();
+    });
+    cv.addEventListener('pointermove', e => {
+      if (!labels) return;
+      const [x, y] = toLocal(e), p = pointers.get(e.pointerId);
+      if (!p) {
+        if (e.pointerType === 'mouse') pointers.set(e.pointerId, {
+          x,
+          y,
+          touch: false
+        });
+        return;
+      }
+      if (!finishing) snip(p.x, p.y, x, y);
+      p.x = x;
+      p.y = y;
+      if (p.touch) wake();
+    });
+    const lift = e => {
+      pointers.delete(e.pointerId);
+      wake();
+    };
+    cv.addEventListener('pointerup', e => {
+      if (e.pointerType !== 'mouse') lift(e);
+    });
+    cv.addEventListener('pointercancel', lift);
+    cv.addEventListener('pointerleave', lift);
+    again.addEventListener('click', () => {
+      for (const p of pieces) p.cut = false;
+      lctx.globalCompositeOperation = 'copy';
+      lctx.drawImage(locksImg, 0, 0, IW, IH);
+      lctx.globalCompositeOperation = 'source-over';
+      fadeTo = 1;
+      layerA = reduce.matches ? 1 : 0;
+      falling.length = 0;
+      cutArea = 0;
+      finishing = false;
+      box.classList.remove('is-done', 'is-started');
+      done.hidden = true;
+      bar.style.width = '0';
+      wake();
+    });
+
+    // Размер холста по контейнеру с учётом плотности пикселей; картинка прижата к низу
+    function fit() {
+      const r = box.getBoundingClientRect();
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      cv.width = Math.round(r.width * dpr);
+      cv.height = Math.round(r.height * dpr);
+      scale = Math.min(r.width / IW, r.height / IH);
+      ox = (r.width - IW * scale) / 2;
+      oy = r.height - IH * scale;
+      draw();
+    }
+    // Загрузка: фон рамки берём из угла картинки, чтобы не было стыка
+    Promise.all([load(SRC.after), load(SRC.locks), load(SRC.map)]).then(([a, l, m]) => {
+      after = a;
+      IW = a.naturalWidth;
+      IH = a.naturalHeight;
+      R = IW * .022;
+      const c = canvas(1, 1).getContext('2d');
+      c.drawImage(a, 2, 2, 1, 1, 0, 0, 1, 1);
+      const px = c.getImageData(0, 0, 1, 1).data;
+      bg = `rgb(${px[0]},${px[1]},${px[2]})`;
+      box.style.backgroundColor = bg;
+      locksImg = l;
+      layer = canvas(IW, IH);
+      lctx = layer.getContext('2d');
+      lctx.drawImage(l, 0, 0, IW, IH);
+      build(l, m);
+      box.classList.add('is-ready');
+      new ResizeObserver(fit).observe(box);
+      fit();
+    }).catch(() => box.classList.add('is-failed'));
+  })();
   </script>
 </body>
 </html>
