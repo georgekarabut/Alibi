@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Алиби — диагностика игры</title><style>body{margin:16px;background:#151e38;color:#eee;font:14px monospace}pre{white-space:pre-wrap;overflow-wrap:anywhere}iframe{width:100%;height:750px;border:1px solid #c2a56a}</style><h1>Диагностика игры</h1><p>Дождитесь загрузки и пришлите текст журнала. Эта страница не меняет основной сайт.</p><pre id="log"></pre><iframe title="Проверка сайта"></iframe><script>
+const out=document.querySelector('#log');
+const log=s=>{out.textContent+=new Date().toISOString()+' '+s+'\n';};
+const frame=document.querySelector('iframe');
+window.addEventListener('message',e=>{if(e.source===frame.contentWindow&&e.data?.tag==='alibi-diag')log(e.data.text);});
+log(navigator.userAgent);
+const probe=function(){
+const say=s=>parent.postMessage({tag:'alibi-diag',text:String(s)},location.origin);
+window.addEventListener('error',e=>say('ERROR: '+e.message+' '+e.filename+':'+e.lineno));
+window.addEventListener('unhandledrejection',e=>say('REJECTION: '+String(e.reason?.stack||e.reason)));
+window.__gameDiagnostic=say;
+const original=CanvasRenderingContext2D.prototype.getImageData;
+CanvasRenderingContext2D.prototype.getImageData=function(...a){try{return original.apply(this,a);}catch(e){say('getImageData ERROR: '+e);throw e;}};
+const NativeImage=window.Image;
+window.Image=function(...a){const im=new NativeImage(...a);im.addEventListener('load',()=>say('IMAGE OK: '+im.src+' '+im.naturalWidth+'x'+im.naturalHeight));im.addEventListener('error',()=>say('IMAGE ERROR: '+im.src));return im;};
+window.Image.prototype=NativeImage.prototype;
+window.addEventListener('load',()=>{const box=document.querySelector('.hero-game'),cv=box?.querySelector('canvas');if(!box){say('NO GAME BLOCK');return;}let last='';const report=()=>{const r=cv.getBoundingClientRect();const s='GAME '+box.className+'; canvas='+cv.width+'x'+cv.height+'; CSS='+r.width+'x'+r.height;if(s!==last){say(s);last=s;}};new MutationObserver(report).observe(box,{attributes:true,attributeFilter:['class']});report();setTimeout(report,3000);setTimeout(report,15000);});
+};
+(async()=>{try{const response=await fetch('index.html?diagnostic='+Date.now(),{cache:'no-store'});log('INDEX HTTP '+response.status);if(!response.ok)throw Error('Index load failed');let html=await response.text();const pattern=/\.catch\(\(\)\s*=>\s*box\.classList\.add\('is-failed'\)\)/g;let n=0;html=html.replace(pattern,()=>{n++;return ".catch(e=>{window.__gameDiagnostic('GAME INIT ERROR: '+String(e&&e.stack||e));box.classList.add('is-failed');})";});log('Instrumented catch handlers: '+n);const script='<script>('+probe.toString()+')();<\/script>';html=html.replace(/<head>/i,'<head><base href="'+location.origin+location.pathname.replace(/[^/]*$/,'')+'">'+script);frame.srcdoc=html;}catch(e){log('DIAGNOSTICS ERROR: '+e);}})();
+</script></html>
