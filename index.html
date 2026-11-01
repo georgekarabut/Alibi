@@ -57,7 +57,7 @@ const again=box.querySelector('.hero-game-again');
 const reduce=matchMedia('(prefers-reduced-motion: reduce)');
 const load=src=>new Promise((ok,fail)=>{const i=new Image();i.onload=()=>ok(i);i.onerror=fail;i.src=src;});
 const canvas=(w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c;};
-let after,IW,IH,MW,MH,labels,R,bg='#151e38',total=1,cutArea=0;
+let after,locksImg,layer,lctx,IW,IH,MW,MH,labels,R,bg='#151e38',total=1,cutArea=0,layerA=1,fadeTo=1;
 let scale=1,ox=0,oy=0,dpr=1,running=false,finishing=false;
 const pieces=[],byId=new Map(),falling=[],pointers=new Map();
 
@@ -79,13 +79,15 @@ function build(locksImg,mapImg){
   }
   for(const[id,b]of boxes){
     const w=b.x1-b.x0+1,h=b.y1-b.y0+1,c=canvas(w,h),k=c.getContext('2d'),d=k.createImageData(w,h);
+    const e=canvas(w,h),ek=e.getContext('2d'),ed=ek.createImageData(w,h);
     for(let y=0;y<h;y++)for(let x=0;x<w;x++){
       const gx=b.x0+x,gy=b.y0+y;if(lab(gx,gy)!==id)continue;
       const s=(gy*IW+gx)*4,t=(y*w+x)*4;
+      ed.data[t+3]=255;
       d.data[t]=px[s];d.data[t+1]=px[s+1];d.data[t+2]=px[s+2];d.data[t+3]=px[s+3];
     }
-    k.putImageData(d,0,0);
-    const p={id,x:b.x0,y:b.y0,w,h,c,area:b.n,cut:false,a:1};
+    k.putImageData(d,0,0);ek.putImageData(ed,0,0);
+    const p={id,x:b.x0,y:b.y0,w,h,c,e,area:b.n,cut:false};
     pieces.push(p);byId.set(id,p);total+=b.n;
   }
 }
@@ -94,6 +96,7 @@ const labelAt=(x,y)=>x<0||y<0||x>=IW||y>=IH?0:labels[(y*MH/IH|0)*MW+(x*MW/IW|0)]
 function drop(p){
   if(p.cut)return;
   p.cut=true;cutArea+=p.area;
+  lctx.globalCompositeOperation='destination-out';lctx.drawImage(p.e,p.x,p.y);lctx.globalCompositeOperation='source-over';
   if(!reduce.matches){
     const cx=p.x+p.w/2,cy=p.y+p.h/2;
     falling.push({p,x:cx,y:cy,vx:(Math.random()-.5)*2.2+(cx-IW/2)*.006,vy:-1-Math.random()*2.5,rot:0,vr:(Math.random()-.5)*.09,a:1});
@@ -118,7 +121,7 @@ function progress(){
     finishing=true;
     const rest=pieces.filter(q=>!q.cut).sort((a,b)=>a.y-b.y);
     rest.forEach((q,i)=>setTimeout(()=>{drop(q);bar.style.width=(cutArea/total*100).toFixed(1)+'%';wake();},reduce.matches?0:i*40));
-    setTimeout(()=>{box.classList.add('is-done');done.hidden=false;},reduce.matches?0:rest.length*40+500);
+    setTimeout(()=>{fadeTo=0;if(reduce.matches)layerA=0;wake();box.classList.add('is-done');done.hidden=false;},reduce.matches?0:rest.length*40+500);
   }
 }
 
@@ -127,11 +130,7 @@ function draw(){
   ctx.fillStyle=bg;ctx.fillRect(0,0,cv.width,cv.height);
   ctx.setTransform(dpr*scale,0,0,dpr*scale,dpr*ox,dpr*oy);
   ctx.drawImage(after,0,0,IW,IH);
-  for(const p of pieces)if(!p.cut){
-    if(p.a<1)ctx.globalAlpha=p.a;
-    ctx.drawImage(p.c,p.x,p.y);
-    ctx.globalAlpha=1;
-  }
+  if(layerA>0){ctx.globalAlpha=layerA;ctx.drawImage(layer,0,0);ctx.globalAlpha=1;}
   for(const f of falling){
     ctx.save();ctx.globalAlpha=f.a;ctx.translate(f.x,f.y);ctx.rotate(f.rot);
     ctx.drawImage(f.p.c,-f.p.w/2,-f.p.h/2);ctx.restore();
@@ -143,7 +142,7 @@ function draw(){
 }
 function tick(){
   let busy=false;
-  for(const p of pieces)if(!p.cut&&p.a<1){p.a=Math.min(1,p.a+.06);busy=true;}
+  if(layerA!==fadeTo){layerA=fadeTo>layerA?Math.min(fadeTo,layerA+.06):Math.max(fadeTo,layerA-.06);busy=true;}
   for(let i=falling.length-1;i>=0;i--){
     const f=falling[i];
     f.vy+=.45;f.x+=f.vx;f.y+=f.vy;f.rot+=f.vr;f.a-=.014;
@@ -175,7 +174,9 @@ cv.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')lift(e);});
 cv.addEventListener('pointercancel',lift);
 cv.addEventListener('pointerleave',lift);
 again.addEventListener('click',()=>{
-  for(const p of pieces){p.cut=false;p.a=reduce.matches?1:0;}
+  for(const p of pieces)p.cut=false;
+  lctx.globalCompositeOperation='copy';lctx.drawImage(locksImg,0,0,IW,IH);lctx.globalCompositeOperation='source-over';
+  fadeTo=1;layerA=reduce.matches?1:0;
   falling.length=0;cutArea=0;finishing=false;
   box.classList.remove('is-done','is-started');done.hidden=true;bar.style.width='0';
   wake();
@@ -193,6 +194,7 @@ Promise.all([load(SRC.after),load(SRC.locks),load(SRC.map)]).then(([a,l,m])=>{
   after=a;IW=a.naturalWidth;IH=a.naturalHeight;R=IW*.022;
   const c=canvas(1,1).getContext('2d');c.drawImage(a,2,2,1,1,0,0,1,1);
   const px=c.getImageData(0,0,1,1).data;bg=`rgb(${px[0]},${px[1]},${px[2]})`;box.style.backgroundColor=bg;
+  locksImg=l;layer=canvas(IW,IH);lctx=layer.getContext('2d');lctx.drawImage(l,0,0,IW,IH);
   build(l,m);
   box.classList.add('is-ready');
   new ResizeObserver(fit).observe(box);fit();
