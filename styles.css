@@ -251,6 +251,11 @@ section {
   background: var(--navy);
 }
 
+.footer-brand {
+  font: 26px Georgia, serif;
+  color: var(--gold);
+}
+
 .footer-inner {
   justify-content: space-between;
 }
@@ -1241,11 +1246,6 @@ a.btn.mobile[hidden] {
   color: var(--text-calm);
 }
 
-.hero-photo {
-  aspect-ratio: 4/5;
-  width: 100%;
-}
-
 @media (min-width:700px) {
   .hero > .wrap {
     display: grid;
@@ -1261,17 +1261,10 @@ a.btn.mobile[hidden] {
     grid-column: 1;
     grid-row: 2;
   }
-  .hero-photo {
+  .hero-game {
     grid-column: 2;
     grid-row: 1/span 2;
     justify-self: end;
-  }
-}
-
-@media (max-width:699px) {
-  .hero-photo {
-    aspect-ratio: 4/3;
-    max-height: 360px;
   }
 }
 
