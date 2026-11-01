@@ -215,3 +215,7 @@ a.btn.mobile[hidden]{display:none!important}
 .hero-game canvas{opacity:0;transition:opacity .5s}
 .hero-game.is-ready canvas{opacity:1}
 .hero-game.is-failed .hero-game-hint{display:none}
+.master-reviews{margin-left:auto;display:inline-flex;align-items:center;gap:6px;color:#e2dfd6;font-size:15px;white-space:nowrap;text-decoration:none}
+.master-reviews span{color:#d9bd82}
+.master-reviews:hover{color:#d9bd82}
+.master-bio{flex:1 0 auto}
