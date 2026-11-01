@@ -210,3 +210,6 @@ a.btn.mobile[hidden]{display:none!important}
 @media(max-width:999px){.hero .hero-game{width:min(100%,380px);min-height:0;max-height:none;aspect-ratio:4/5;margin:0 auto}}
 @media(prefers-reduced-motion:reduce){.hero-game-done{animation:none}.hero-game-hint,.hero-game-progress span{transition:none}}
 /* END hero game */
+.hero-game canvas{opacity:0;transition:opacity .5s}
+.hero-game.is-ready canvas{opacity:1}
+.hero-game.is-failed .hero-game-hint{display:none}
