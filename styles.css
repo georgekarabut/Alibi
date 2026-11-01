@@ -130,3 +130,26 @@ a.btn.mobile[hidden]{display:none!important}
 .review-source:hover{background:#c2a56a14;border-color:#c2a56a}
 @media(prefers-reduced-motion:reduce){.review-source{transition:none}}
 /* END review sources */
+
+/* BEGIN extra services */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.extras{margin-top:22px}
+.extras>summary{list-style:none;cursor:pointer;gap:12px;user-select:none}
+.extras>summary::-webkit-details-marker{display:none}
+.extras>summary::after{content:'';width:8px;height:8px;margin-top:-4px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);transition:transform .2s,margin .2s}
+.extras[open]>summary::after{margin-top:4px;transform:rotate(-135deg)}
+.extras>summary:hover{border-color:#c2a56a}
+.extras-panel{margin-top:16px;padding:12px 28px 20px;border:1px solid #c2a56a55;border-radius:16px;background:#1017291a}
+.extras-table{width:100%;border-collapse:collapse;font-size:19px;line-height:1.45;letter-spacing:.25px}
+.extras-table thead th{padding:10px 0;border-bottom:1px solid #c2a56a55;font-size:13px;font-weight:400;letter-spacing:1.2px;text-transform:uppercase;color:#b7b7af;text-align:left}
+.extras-table thead th:nth-child(2),.extras-table td.extras-time{text-align:right;padding-right:28px}
+.extras-table thead th:last-child{text-align:right}
+.extras-table tbody th,.extras-table td{padding:14px 0;border-bottom:1px solid #ffffff20;font-weight:400;text-align:left;vertical-align:baseline}
+.extras-table tbody tr:last-child>*{border-bottom:0}
+.extras-table td.extras-time{white-space:nowrap;color:#b7b7af;font-size:16px}
+.extras-table td.extras-time,.extras-table td.price-amount{width:1%;white-space:nowrap}
+.extras-table td.price-amount{text-align:right}
+.extras-panel .price-explanation{margin:6px 0 0}
+@media(max-width:760px){.extras>summary{width:100%}.extras-panel{padding:8px 18px 16px}.extras-table{font-size:17px}.extras-table thead th:nth-child(2),.extras-table td.extras-time{padding-right:14px}.extras-table td.extras-time{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.extras>summary::after{transition:none}}
+/* END extra services */
