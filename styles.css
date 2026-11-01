@@ -153,3 +153,38 @@ a.btn.mobile[hidden]{display:none!important}
 @media(max-width:760px){.extras>summary{width:100%}.extras-panel{padding:8px 18px 16px}.extras-table{font-size:17px}.extras-table thead th:nth-child(2),.extras-table td.extras-time{padding-right:14px}.extras-table td.extras-time{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.extras>summary::after{transition:none}}
 /* END extra services */
+
+/* BEGIN photos, masters, rating */
+.photo-slot{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;margin:0;min-width:0;padding:20px;border:1.5px dashed #c2a56a77;border-radius:16px;background:repeating-linear-gradient(135deg,#c2a56a08 0 14px,transparent 14px 28px),#1017292e;color:#c2a56a;text-align:center}
+.photo-slot svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linejoin:round;opacity:.85}
+.photo-slot figcaption{display:flex;flex-direction:column;gap:2px;font-size:15px;line-height:1.4;color:#e2dfd6}
+.photo-slot figcaption small{font-size:12px;letter-spacing:.4px;color:#b7b7af}
+.section-lead{max-width:620px;margin:-12px 0 34px;color:#e0e6df}
+.hero-photo{aspect-ratio:4/5;width:100%}
+@media(min-width:1000px){.hero > .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);column-gap:56px;align-items:start}.hero-copy{grid-column:1;grid-row:1}.hero .benefits{grid-column:1;grid-row:2}.hero-photo{grid-column:2;grid-row:1/span 2;max-height:min(620px,calc(100dvh - var(--site-header-height) - 80px));aspect-ratio:auto;height:100%}}
+@media(max-width:999px){.hero-photo{aspect-ratio:4/3;max-height:360px}}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:230px;gap:16px}
+.gallery-grid .gallery-main{grid-column:span 2;grid-row:span 2}
+@media(max-width:760px){.gallery-grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:150px;gap:12px}.gallery-grid .gallery-main{grid-row:span 1;grid-column:span 2;min-height:210px}.gallery-grid .photo-slot:last-child{grid-column:span 2}.photo-slot{padding:12px}.photo-slot figcaption{font-size:13px}.photo-slot figcaption small{font-size:11px}}
+.masters-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.master-card{display:flex;flex-direction:column;min-width:0;border:1px solid #c2a56a55;border-radius:16px;background:#1017291a;overflow:hidden}
+.master-card .master-photo{aspect-ratio:4/5;border:0;border-bottom:1.5px dashed #c2a56a77;border-radius:0}
+.master-body{display:flex;flex-direction:column;flex:1;padding:24px 28px 28px}
+.master-role{margin:0 0 4px;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#d9bd82}
+.master-body h3{margin:0 0 12px;font:400 34px/1.2 Georgia,serif;color:#f2efe8}
+.master-bio{margin:0 0 20px;max-width:none;color:#e0e6df}
+.master-stats{display:flex;flex-wrap:wrap;gap:12px 28px;margin:0 0 24px;padding:16px 0 0;border-top:1px solid #ffffff20;list-style:none}
+.master-stats li{display:flex;flex-direction:column}
+.master-stats b{font:400 24px/1.3 Georgia,serif;color:#d9bd82}
+.master-stats span{font-size:14px;color:#b7b7af}
+.master-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:auto}
+.master-link{color:#c2a56a;font-size:15px;text-decoration:underline;text-underline-offset:4px;text-decoration-color:#c2a56a66}
+.master-link:hover{text-decoration-color:#c2a56a}
+@media(min-width:761px){.master-card .master-photo{aspect-ratio:5/4}}
+@media(max-width:760px){.masters-grid{grid-template-columns:1fr;gap:18px}.master-body{padding:20px 22px 24px}.master-body h3{font-size:30px}.master-actions .btn{flex:1 1 100%}}
+.rating-badges{display:flex;flex-wrap:wrap;gap:12px;margin:22px 0 0;padding:0;list-style:none}
+.rating-badges li{display:grid;grid-template-columns:auto auto;align-items:center;column-gap:10px;padding:12px 16px;border:1px solid #c2a56a55;border-radius:12px;background:#1017291a}
+.rating-badges b{font:400 28px/1 Georgia,serif;color:#f2efe8}
+.rating-badges .stars{color:#d9bd82;font-size:14px;letter-spacing:2px}
+.rating-badges li>span:last-child{grid-column:1/-1;margin-top:6px;font-size:13px;color:#b7b7af}
+/* END photos, masters, rating */
