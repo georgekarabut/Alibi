@@ -18,12 +18,12 @@
   <meta content="ru_RU" property="og:locale"/>
   <meta content="Барбершоп Алиби в Краснодаре — стрижки и борода" property="og:title"/>
   <meta content="Барберы Алиби: мужские стрижки, стрижка и оформление бороды, комплекс. Краснодар, ул. Воронежская, 47/14, ЖК «Фонтаны». Ежедневно 11:00–22:00. Запись онлайн." property="og:description"/>
-  <meta content="https://georgekarabut.github.io/Alibi/assets/images/og-image.jpg" property="og:image"/>
+  <meta content="https://alibi-krd.ru/assets/images/og-image.jpg" property="og:image"/>
   <meta content="1200" property="og:image:width"/>
   <meta content="630" property="og:image:height"/>
   <meta content="Барбершоп Алиби в Краснодаре: логотип и иллюстрация гостя со свежим фейдом и бородой" property="og:image:alt"/>
   <meta content="summary_large_image" name="twitter:card"/>
-  <meta content="https://georgekarabut.github.io/Alibi/assets/images/og-image.jpg" name="twitter:image"/>
+  <meta content="https://alibi-krd.ru/assets/images/og-image.jpg" name="twitter:image"/>
   <meta content="Барбершоп Алиби в Краснодаре — стрижки и борода" name="twitter:title"/>
   <meta content="Барберы Алиби: мужские стрижки, стрижка и оформление бороды, комплекс. Краснодар, ул. Воронежская, 47/14, ЖК «Фонтаны». Ежедневно 11:00–22:00. Запись онлайн." name="twitter:description"/>
   <script type="application/ld+json">
@@ -34,8 +34,8 @@
       "name": "Алиби",
       "description": "Барбершоп в Краснодаре: барберы делают мужские стрижки, стрижку и оформление бороды, комплекс.",
       "url": "https://alibi-krd.ru/",
-      "logo": "https://georgekarabut.github.io/Alibi/assets/images/logo.png",
-      "image": "https://georgekarabut.github.io/Alibi/assets/images/og-image.jpg",
+      "logo": "https://alibi-krd.ru/assets/images/logo.png",
+      "image": "https://alibi-krd.ru/assets/images/og-image.jpg",
       "telephone": "+79615252549",
       "priceRange": "₽300–₽2600",
       "currenciesAccepted": "RUB",
@@ -448,10 +448,6 @@
     </section>
     <script>
     (() => {
-      // На alibi-krd.ru фото берём с GitHub Pages, как картинки игры и шрифты: российские провайдеры
-      // обрывают соединения с Cloudflare примерно после 16 КБ
-      const BASE = /(^|\.)alibi-krd\.ru$/.test(location.hostname) ? 'https://georgekarabut.github.io/Alibi/' : '';
-      if (BASE) document.querySelectorAll('.gallery-photo img, .faq-photo img').forEach(i => i.src = BASE + i.getAttribute('src'));
       // Портрет мастера показываем, только когда его файл лежит в assets/images; до этого карточка без фото
       document.querySelectorAll('.master-photo[data-photo]').forEach(f => {
         const img = new Image();
@@ -464,7 +460,7 @@
           f.removeAttribute('aria-label');
           f.hidden = false;
         };
-        img.src = BASE + f.dataset.photo;
+        img.src = f.dataset.photo;
       });
     })();
     </script>
@@ -761,11 +757,10 @@
   })();
   </script>
   <script>
-  // Мини-игра в отдельном файле: сжатая страница должна оставаться меньше 16 КБ, иначе российские
-  // провайдеры обрывают соединение с Cloudflare. На alibi-krd.ru скрипт берём с GitHub Pages, как картинки игры
+  // Мини-игра в отдельном файле, чтобы не утяжелять страницу
   (() => {
     const s = document.createElement('script');
-    s.src = (/(^|\.)alibi-krd\.ru$/.test(location.hostname) ? 'https://georgekarabut.github.io/Alibi/' : '') + 'assets/js/game.js';
+    s.src = 'assets/js/game.js';
     document.body.appendChild(s);
   })();
   </script>

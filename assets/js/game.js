@@ -2,14 +2,11 @@
   'use strict';
   const box = document.querySelector('.hero-game');
   if (!box) return;
-  // Картинки: итоговый вид, слой «до» (волосы + борода) и карта локонов (R+G = id, B = маска волос).
-  // На alibi-krd.ru берём их с GitHub Pages: российские провайдеры обрывают соединения с Cloudflare
-  // примерно после 16 КБ, и картинки игры до телефона не доходят
-  const BASE = /(^|\.)alibi-krd\.ru$/.test(location.hostname) ? 'https://georgekarabut.github.io/Alibi/' : '';
+  // Картинки: итоговый вид, слой «до» (волосы + борода) и карта локонов (R+G = id, B = маска волос)
   const SRC = {
-    after: BASE + 'assets/images/game-after.webp',
-    locks: BASE + 'assets/images/game-locks.webp',
-    map: BASE + 'assets/images/game-locks-map.png'
+    after: 'assets/images/game-after.webp',
+    locks: 'assets/images/game-locks.webp',
+    map: 'assets/images/game-locks-map.png'
   };
   const cv = box.querySelector('canvas'),
     ctx = cv.getContext('2d');

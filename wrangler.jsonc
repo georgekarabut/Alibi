@@ -1,8 +1,0 @@
-{
-  "name": "alibi",
-  "compatibility_date": "2026-10-23",
-  "assets": {
-    "directory": "./",
-    "not_found_handling": "404-page"
-  }
-}
