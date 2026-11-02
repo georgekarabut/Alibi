@@ -533,6 +533,11 @@ nav {
   line-height: 1.5;
 }
 
+.hero .benefits .star {
+  margin-left: -6px;
+  color: var(--gold-light);
+}
+
 @media (min-width:700px) {
   .hero-copy {
     grid-column: 1;
@@ -1550,17 +1555,51 @@ body > footer {
 
 .footer-inner {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0;
+  gap: 16px 40px;
+}
+
+.footer-about,
+.footer-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.footer-contacts {
+  font: normal 14px/1.6 Arial, Helvetica, sans-serif;
+  text-align: right;
+}
+
+.footer-contacts a {
+  color: var(--gold-light);
+  text-decoration: none;
+}
+
+.footer-contacts a:hover {
+  color: var(--text);
+}
+
+@media (max-width:760px) {
+  .footer-inner {
+    flex-direction: column;
+  }
+
+  .footer-contacts {
+    text-align: left;
+  }
 }
 
 .legal-details {
   position: relative;
-  align-self: stretch;
+  flex: 1 0 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 24px;
   min-width: 0;
-  margin: 20px 0 0;
+  margin: 4px 0 0;
   padding: 18px 0 0;
   text-align: left;
   font: 13px/1.6 Arial, Helvetica, sans-serif;
@@ -1580,6 +1619,85 @@ body > footer {
   margin: 0;
   max-width: none;
   letter-spacing: 0;
+}
+
+.legal-details a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal-details a:hover {
+  color: var(--gold-light);
+}
+
+/* ===== Страница политики конфиденциальности ===== */
+
+.policy {
+  padding: 56px 0 72px;
+  background: var(--navy);
+}
+
+.policy h1 {
+  margin: 0 0 8px;
+  font-size: 46px;
+}
+
+.policy h2 {
+  margin: 40px 0 12px;
+  font-size: 28px;
+  letter-spacing: 0;
+}
+
+.policy p,
+.policy ul {
+  max-width: 760px;
+  color: var(--text-dim);
+  font-size: 18px;
+}
+
+.policy ul {
+  padding-left: 22px;
+}
+
+.policy li + li {
+  margin-top: 6px;
+}
+
+.policy b {
+  color: var(--text);
+  font-weight: 400;
+}
+
+.policy a {
+  color: var(--gold-light);
+}
+
+.policy .policy-date {
+  margin: 0;
+  color: var(--muted);
+  font-size: 16px;
+}
+
+.policy-back {
+  color: var(--gold-light);
+}
+
+.policy-back:hover {
+  color: var(--text);
+}
+
+@media (max-width:760px) {
+  .policy {
+    padding: 36px 0 56px;
+  }
+
+  .policy h1 {
+    font-size: 34px;
+  }
+
+  .policy h2 {
+    font-size: 23px;
+  }
 }
 
 /* ===== Кнопка записи на телефоне ===== */
