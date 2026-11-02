@@ -1832,7 +1832,7 @@ body > footer {
   font-weight: 400;
 }
 
-.policy a {
+.policy a:not(.btn) {
   color: var(--gold-light);
 }
 
