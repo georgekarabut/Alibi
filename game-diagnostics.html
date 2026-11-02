@@ -83,6 +83,43 @@
         await timeout(img(url, !!base), 20000).then(r => log('  показ по ссылке OK ' + r, 'ok'), e => log('  показ по ссылке ОШИБКА ' + e.message, 'bad'));
       }
     }
+    // 4. Сама игра: страница сайта во фрейме, ошибки ловим до запуска её скриптов
+    log('\n--- Игра ---');
+    try {
+      const html = await (await fetch('./?d=' + Date.now(), { cache: 'no-store' })).text();
+      const patched = html
+        .replace(".catch(() => box.classList.add('is-failed'))", ".catch(e => { box.classList.add('is-failed'); window.__gameError = String(e && (e.stack || e.message || e)); })")
+        .replace('<head>', '<head><base href="' + new URL('./', location.href).href + '">');
+      log('Страница ' + html.length + ' Б, перехват ошибки ' + (patched.includes('__gameError') ? 'стоит' : 'НЕ встал'));
+      const frame = document.createElement('iframe');
+      frame.style.cssText = 'width:100%;height:700px;border:1px solid #c2a56a';
+      document.body.append(frame);
+      const w = frame.contentWindow, errors = [];
+      w.addEventListener('error', e => errors.push('error: ' + e.message + ' @' + e.lineno));
+      w.addEventListener('unhandledrejection', e => errors.push('rejection: ' + String(e.reason && (e.reason.stack || e.reason))));
+      const a = ms();
+      frame.contentDocument.open();
+      frame.contentDocument.write(patched);
+      frame.contentDocument.close();
+      let box, last = '';
+      for (let i = 0; i < 60; i++) {
+        await new Promise(r => setTimeout(r, 500));
+        box = frame.contentDocument.querySelector('.hero-game');
+        const cv = box && box.querySelector('canvas');
+        const s = box ? box.className + ' холст ' + cv.width + 'x' + cv.height + ' блок ' + Math.round(box.getBoundingClientRect().width) + 'x' + Math.round(box.getBoundingClientRect().height) : 'блока игры нет';
+        if (s !== last) log('  ' + (ms() - a) + ' мс: ' + (last = s));
+        if (/is-ready|is-failed/.test(s)) break;
+      }
+      if (w.__gameError) log('ОШИБКА ИГРЫ ' + w.__gameError, 'bad');
+      errors.forEach(e => log('  ' + e, 'bad'));
+      if (box && box.classList.contains('is-ready')) {
+        const cv = box.querySelector('canvas'), k = cv.getContext('2d');
+        const p = k.getImageData(cv.width >> 1, cv.height >> 1, 1, 1).data;
+        log('ИГРА ЗАПУСТИЛАСЬ, пиксель в центре холста rgba(' + [...p].join(',') + ')', 'ok');
+      } else if (box && !box.classList.contains('is-failed')) log('Игра не дошла ни до успеха, ни до ошибки за 30 с', 'bad');
+    } catch (e) {
+      log('Не удалось запустить игру во фрейме: ' + e, 'bad');
+    }
     log('\nГОТОВО за ' + Math.round(ms() / 1000) + ' с');
   })();
   </script>
