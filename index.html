@@ -141,6 +141,86 @@
       }
     }
   </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Где находится барбершоп Алиби?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Краснодар, ул. Воронежская, 47/14, ЖК «Фонтаны». Вход — стеклянная дверь под вывеской «Алиби цирюльня». Построить маршрут на Яндекс Картах."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Сколько стоит мужская стрижка?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Стрижка у младшего барбера — 1 000 ₽, у старшего — 1 700 ₽. Длится около часа."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Делаете ли вы фейд?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Да. Фейд — плавный переход от коротких волос у висков и затылка к длине сверху. Стоит как обычная стрижка: 1 000 ₽ у младшего барбера и 1 700 ₽ у старшего."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Сколько стоит стрижка и оформление бороды?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Оформление бороды — 500 ₽ у младшего барбера и 900 ₽ у старшего, около 30 минут. Комплекс «стрижка и борода» — 1 500 ₽ и 2 600 ₽, около 1 часа 30 минут."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Что такое камуфляж седины?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Тонирование седых волос: седина становится менее заметной и смотрится естественно. Делаем для головы и для бороды, около 30 минут, 800 ₽."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Сколько длится стрижка?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Стрижка — 1 час, борода — 30 минут, комплекс «стрижка и борода» — 1 час 30 минут. Окантовка, стрижка налысо и стрижка под одну насадку — около 30 минут."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Нужна ли запись?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Лучше записаться заранее: онлайн, по телефону +7 961 525-25-49, в WhatsApp или Telegram."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Какие часы работы?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ежедневно с 11:00 до 22:00, без выходных."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Как можно оплатить?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Наличными, картой или по СБП."
+          }
+        }
+      ]
+    }
+  </script>
   <!-- Yandex.Metrika counter -->
   <script type="text/javascript">
     (function(m,e,t,r,i,k,a){
@@ -175,7 +255,7 @@
         <div class="hero-copy">
           <div class="eyebrow">Твой стиль. Твой характер. Твоё Алиби.</div>
           <h1>Барбершоп,<br/>где тебе <em>рады</em></h1>
-          <p class="intro">Мы создали в Краснодаре, в ЖК «Фонтаны», пространство, где каждый чувствует себя своим.</p>
+          <p class="intro">Мужские стрижки и борода в Краснодаре, в ЖК «Фонтаны» — в пространстве, где каждый чувствует себя своим.</p>
           <p>Сначала слушаем, чего ты хочешь, потом берёмся за ножницы. Стрижка и борода — без спешки и с вниманием к деталям.</p>
           <div class="actions">
             <a class="btn" data-booking-cta="" href="https://n1314282.yclients.ru/company/1196928/personal/select-master?utm_source=site&amp;utm_medium=landing" rel="noopener noreferrer" target="_blank">Записаться на стрижку</a>
@@ -371,7 +451,7 @@
       // На alibi-krd.ru фото берём с GitHub Pages, как картинки игры и шрифты: российские провайдеры
       // обрывают соединения с Cloudflare примерно после 16 КБ
       const BASE = /(^|\.)alibi-krd\.ru$/.test(location.hostname) ? 'https://georgekarabut.github.io/Alibi/' : '';
-      if (BASE) document.querySelectorAll('.gallery-photo img').forEach(i => i.src = BASE + i.getAttribute('src'));
+      if (BASE) document.querySelectorAll('.gallery-photo img, .faq-photo img').forEach(i => i.src = BASE + i.getAttribute('src'));
       // Портрет мастера показываем, только когда его файл лежит в assets/images; до этого карточка без фото
       document.querySelectorAll('.master-photo[data-photo]').forEach(f => {
         const img = new Image();
@@ -462,6 +542,68 @@
             <span aria-atomic="true" aria-live="polite" class="carousel-status">1 / 8</span>
             <button aria-label="Следующий отзыв" class="carousel-btn" data-direction="1" type="button">›</button>
           </div>
+        </div>
+      </div>
+    </section>
+    <section class="faq-section" id="faq" aria-labelledby="faq-title">
+      <div class="wrap">
+        <h2 id="faq-title">Частые вопросы</h2>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>Где находится барбершоп Алиби?</summary>
+            <div class="faq-answer">
+              <p>Краснодар, ул. Воронежская, 47/14, ЖК «Фонтаны». Вход — стеклянная дверь под вывеской «Алиби цирюльня». <a href="https://yandex.ru/maps/org/alibi/21719372800/" rel="noopener noreferrer" target="_blank">Построить маршрут на Яндекс Картах</a>.</p>
+              <figure class="faq-photo"><img alt="Вход в барбершоп: стеклянная дверь под вывеской «Алиби цирюльня» на синем фасаде" decoding="async" height="1003" loading="lazy" src="assets/images/entrance.webp" width="820"/></figure>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Сколько стоит мужская стрижка?</summary>
+            <div class="faq-answer">
+              <p>Стрижка у младшего барбера — 1&nbsp;000&nbsp;₽, у старшего — 1&nbsp;700&nbsp;₽. Длится около часа.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Делаете ли вы фейд?</summary>
+            <div class="faq-answer">
+              <p>Да. Фейд — плавный переход от коротких волос у висков и затылка к длине сверху. Стоит как обычная стрижка: 1&nbsp;000&nbsp;₽ у младшего барбера и 1&nbsp;700&nbsp;₽ у старшего.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Сколько стоит стрижка и оформление бороды?</summary>
+            <div class="faq-answer">
+              <p>Оформление бороды — 500&nbsp;₽ у младшего барбера и 900&nbsp;₽ у старшего, около 30 минут. Комплекс «стрижка и борода» — 1&nbsp;500&nbsp;₽ и 2&nbsp;600&nbsp;₽, около 1 часа 30 минут.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Что такое камуфляж седины?</summary>
+            <div class="faq-answer">
+              <p>Тонирование седых волос: седина становится менее заметной и смотрится естественно. Делаем для головы и для бороды, около 30 минут, 800&nbsp;₽.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Сколько длится стрижка?</summary>
+            <div class="faq-answer">
+              <p>Стрижка — 1 час, борода — 30 минут, комплекс «стрижка и борода» — 1 час 30 минут. Окантовка, стрижка налысо и стрижка под одну насадку — около 30 минут.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Нужна ли запись?</summary>
+            <div class="faq-answer">
+              <p>Лучше записаться заранее: <a href="https://n1314282.yclients.ru/company/1196928/personal/select-master?utm_source=site&amp;utm_medium=faq" rel="noopener noreferrer" target="_blank">онлайн</a>, по телефону <a href="tel:+79615252549">+7&nbsp;961&nbsp;525-25-49</a>, в WhatsApp или Telegram.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Какие часы работы?</summary>
+            <div class="faq-answer">
+              <p>Ежедневно с 11:00 до 22:00, без выходных.</p>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary>Как можно оплатить?</summary>
+            <div class="faq-answer">
+              <p>Наличными, картой или по СБП.</p>
+            </div>
+          </details>
         </div>
       </div>
     </section>
