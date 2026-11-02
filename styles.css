@@ -2,9 +2,13 @@
 
 /* ===== Переменные и шрифты ===== */
 
+/* Шрифты сначала берём с GitHub Pages: соединения с Cloudflare (alibi-krd.ru) у российских провайдеров обрываются после ~16 КБ.
+   Если GitHub недоступен, браузер возьмёт локальную копию */
+
 @font-face {
   font-family: 'Renaissance';
-  src: url(assets/fonts/renaissance.woff) format('woff');
+  src: url(https://georgekarabut.github.io/Alibi/assets/fonts/renaissance.woff) format('woff'),
+    url(assets/fonts/renaissance.woff) format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -12,7 +16,8 @@
 
 @font-face {
   font-family: AlibiSign;
-  src: url(assets/fonts/alibi-sign.woff) format('woff');
+  src: url(https://georgekarabut.github.io/Alibi/assets/fonts/alibi-sign.woff) format('woff'),
+    url(assets/fonts/alibi-sign.woff) format('woff');
   font-weight: 700;
   font-display: swap;
 }
