@@ -1183,7 +1183,8 @@ nav {
 }
 
 .master-card .master-photo {
-  aspect-ratio: 4/5;
+  /* Портреты 2:3 — рамка той же формы, чтобы фото было видно целиком, без обрезки */
+  aspect-ratio: 2/3;
   margin: 0;
   border: 0;
   border-bottom: 1.5px dashed var(--gold-a47);
@@ -1200,8 +1201,6 @@ nav {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Портреты вертикальные 2:3, в карточке кадр ниже — держим в кадре голову, а не середину кадра */
-  object-position: 50% 15%;
 }
 
 .master-card .master-photo:not(.photo-slot) {
@@ -1295,12 +1294,6 @@ nav {
   max-width: none;
   color: var(--text-calm);
   flex: 1 0 auto;
-}
-
-@media (min-width:761px) {
-  .master-card .master-photo {
-    aspect-ratio: 5/4;
-  }
 }
 
 @media (max-width:760px) {
